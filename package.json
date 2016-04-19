@@ -1,0 +1,16 @@
+{
+  "name": "generate-summary",
+  "version": "1.0.0",
+  "description": "Use this application to generate all daily bids summary in the history, and store them into the mongodb",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Likun Du",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.3.5",
+    "express": "^4.13.4",
+    "mongoose": "^4.4.12"
+  }
+}
