@@ -48,7 +48,6 @@ exports.pastSummary = function(items,date){
   //sortDate(exeList, 'executionDate', 0, exeList.length - 1);
   //console.log(openList);
   var first = new Date(list[0].createdDate);
-  console.log(first);
   //var firstExe = new Date(exeList[0].executionDate);
   var startDate = new Date(first.getUTCFullYear(),
                            first.getUTCMonth(),
@@ -56,9 +55,9 @@ exports.pastSummary = function(items,date){
   for (let i = 0; i < list.length; i++) {
     if (new Date(list[i].createdDate) <= startDate ) continue;
     let temp = Summary.calSummary(list.slice(0,i-1));
-    temp['date'] = startDate;
+    temp['date'] = new Date(startDate);
     res.push(temp);
     startDate.setDate(startDate.getDate() + 1);
   }
-  console.log(res);
+  return res;
 };

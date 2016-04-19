@@ -23,7 +23,6 @@ BidsSchema.statics.getBids =  function () {
 
 		self.find('bids','',function (err, bids) {
 
-			console.log('findAll callback');
 			if (err) {
 				return reject(err); // why return not else
 			}
