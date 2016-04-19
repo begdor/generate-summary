@@ -6,6 +6,7 @@ var pastSummary = require('./pastSummary');
 var mongoose = require('mongoose');
 
 var Bids = require('./models/Bids');
+var BidSums = require('./models/BidSums');
 //MARK: connect to mongodb in Promise constructor
 mongoose.connect('mongodb://localhost:27017/test');
 
@@ -15,9 +16,17 @@ app.get('/',function(req,res){
 	//MARK: connect ot mongoose and verify the login information
 	var promise = Bids.getBids();
 	promise.then(function(bids){
-    console.log(bids.length);
-    pastSummary.pastSummary(bids, new Date());
-    },function(err){
+    var sums = pastSummary.pastSummary(bids, new Date());
+    /*for (let sum in sums) {
+      console.log(sum);
+      let bidSum = new BidSums(sum);
+      bidSum.save();
+    }*/
+    sums.forEach(function(entry){
+      let bidSum = new BidSums(entry);
+      bidSum.save();
+    });
+  },function(err){
 		console.log(error);
 	});
 });
