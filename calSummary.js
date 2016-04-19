@@ -3,6 +3,7 @@
 // return the summary fields
 
 var getMedian = function (values) {
+    if (values.length == 0) return 0.0;
     values.sort( function(a,b) {return a - b;} );
     var half = Math.floor(values.length/2);
     if(values.length % 2)
@@ -39,6 +40,7 @@ exports.calSummary = function(items){
     medBidAmt: 0,
   };
 
+  if (items.length == 0) return {'executed': executed,'open': open};
 
   var sumSavePercent = 0,
       sumPrice = 0,
@@ -94,6 +96,7 @@ exports.calSummary = function(items){
       open.total++;
     }
   }
+
   if (executed.total !== 0) {
     executed.highestSave = executed.highestSave.toFixed(2);
     executed.maxPrice = executed.maxPrice.toFixed(2);

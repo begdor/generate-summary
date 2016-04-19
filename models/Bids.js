@@ -11,7 +11,7 @@ var BidsSchema   = new Schema({
   executionDate:  Date,
   status:         String,
   originalPrice:  Number,
-  exectuionPrice: Number,
+  executionPrice: Number,
   strikePrice:    Number,
   quantity:       Number,
 });
