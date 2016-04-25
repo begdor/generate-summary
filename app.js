@@ -26,6 +26,8 @@ app.get('/',function(req,res){
       let bidSum = new BidSums(entry);
       bidSum.save();
     });
+
+		console.log('finished: total summaries:',sums.length);
   },function(err){
 		console.log(error);
 	});
