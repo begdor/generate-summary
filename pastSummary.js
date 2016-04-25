@@ -35,15 +35,17 @@ var exports = module.exports = {};
 
 exports.pastSummary = function(items,date){
   //generate a standard date starting of the day
-  var currentDate = new Date(date.getUTCFullYear, date.getUTCMonth, date.getUTCDate);
+  var currentDate = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
   var list = [];
   var res = [];
   for (let i in items) {
     if (items[i].status === 'open' ||
-    items[i].status === 'executed' || items[i].status === 'executedArchived') {
+    ((items[i].status === 'executed'|| items[i].status === 'executedArchived')
+    && items[i].originalPrice != items[i].strikePrice)) {
       list.push(items[i]);
     }
   }
+
   sortDate(list, 'createdDate', 0, list.length - 1);
   //sortDate(exeList, 'executionDate', 0, exeList.length - 1);
   //console.log(openList);
@@ -52,9 +54,23 @@ exports.pastSummary = function(items,date){
   var startDate = new Date(first.getUTCFullYear(),
                            first.getUTCMonth(),
                            first.getUTCDate());
-  for (let i = 0; i < list.length; i++) {
-    if (new Date(list[i].createdDate) <= startDate ) continue;
-    let temp = Summary.calSummary(list.slice(0,i-1));
+  var i = 1;
+  while (startDate <= currentDate) {
+    while(i < list.length) {
+      //find the index of list that createDate is later than startDate
+      if (new Date(list[i].createdDate) <= startDate ) {
+        i++;
+      }
+      //generate the summary of that day and added it to res list, increase the day by one
+      else {
+        var temp = Summary.calSummary(list.slice(0,i-1));
+        temp['date'] = new Date(startDate);
+        res.push(temp);
+        startDate.setDate(startDate.getDate() + 1);
+      }
+    }
+    //if the index reach the end of the list but the day is not currentDate
+    temp = Summary.calSummary(list.slice(0,i-1));
     temp['date'] = new Date(startDate);
     res.push(temp);
     startDate.setDate(startDate.getDate() + 1);
